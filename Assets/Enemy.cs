@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class Enemy : MonoBehaviour
 {
-    void Update()
+    [SerializeField] private float _speed;
+
+    private void Update()
     {
-        transform.position = new Vector2(transform.position.x + 2*Time.deltaTime, transform.position.y);
+        transform.Translate(transform.right * _speed * Time.deltaTime);
     }
 }
