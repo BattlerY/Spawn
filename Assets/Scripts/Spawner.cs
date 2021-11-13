@@ -6,13 +6,15 @@ public class Spawner : MonoBehaviour
 {
     [SerializeField] private Enemy _enemy;
 
-    private List<Transform> _spawnPoints;
+    private Transform[] _spawnPoints;
 
     private void Awake()
     {
-        _spawnPoints = new List<Transform>();
-        foreach (Transform item in transform)
-            _spawnPoints.Add(item);
+        _spawnPoints = new Transform[transform.childCount];
+
+        for (int i = 0; i < transform.childCount; i++)
+            _spawnPoints[i] = transform.GetChild(i);
+
         StartCoroutine(SpawnEnemy());
     }
 
@@ -23,7 +25,7 @@ public class Spawner : MonoBehaviour
 
         while (true)
         { 
-               spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Count)];
+               spawnPoint = _spawnPoints[Random.Range(0, _spawnPoints.Length)];
             Instantiate(_enemy, spawnPoint.position, Quaternion.identity);
             yield return waitTime;
         }
